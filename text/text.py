@@ -41,7 +41,7 @@ def remove_regex(data, regex_pattern):
     """
 
 
-    ls = []
+    output = []
     words = ''
     
     for line in data:
@@ -50,24 +50,35 @@ def remove_regex(data, regex_pattern):
         for m in matches: 
             line = re.sub(m.group().strip(), '', line)
 
-        ls.append(line)
+        output.append(line)
 
-    return ls
+    return output
 
-def replace_emoticons(data, emoticon_list):
+def remove_emoticons(data: str) -> list:
+    """Remove emoticons de um dado texto
+
+    Args:
+        data (str): Texto no qual quer remover emoticons
+
+    Returns:
+        list: lista de caracteres sem emoticon
     """
-    substitui chaves do dicionario emoticon_list
-    pelos valores 
-    """
-    ls = []
+    
+    emoticon_regex = re.compile(pattern = "["
+        u"\U0001F600-\U0001F64F"  # emoticons
+        u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+        u"\U0001F680-\U0001F6FF"  # transport & map symbols
+        u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                           "]+", flags = re.UNICODE)
+    
+    output = []
 
     for line in data:
-        for exp in emoticon_list:
-            line = line.replace(exp, emoticon_list[exp])
+        line =  emoticon_regex.sub(r'',line)
 
-        ls.append(line)
+        output.append(line)
 
-    return ls
+    return output
 
 def tokenize_text(data):
     """
