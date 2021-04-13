@@ -1,7 +1,7 @@
 import unittest
 
-from text.text import (remove_url ,remove_emoticons, tokenize_text, untokenize_text,
-                       get_text_cloud, get_freq_dist_list)
+from text.text import (remove_url, remove_emoticons, tokenize_text, 
+                       untokenize_text, get_text_cloud, get_freq_dist_list)
 
 
 class TestTextProcessing(unittest.TestCase):
