@@ -84,13 +84,14 @@ def tokenize_text(data):
     """
     tokeniza
     """
-    ls = []
+    
+    output = []
 
     for line in data:
         tokens = wordpunct_tokenize(line)
-        ls.append(tokens)
+        output.append(tokens)
 
-    return ls
+    return output
 
 def apply_standardization(tokens, std_list):
     """
@@ -98,7 +99,7 @@ def apply_standardization(tokens, std_list):
 
     exemplo de std_list : std_list = {'eh': 'é', 'vc': 'você' ... etc}
     """
-    ls = []
+    output = []
 
     for tk_line in tokens:
         new_tokens = []
@@ -109,15 +110,15 @@ def apply_standardization(tokens, std_list):
                 
             new_tokens.append(word) 
             
-        ls.append(new_tokens)
+        output.append(new_tokens)
 
-    return ls
+    return output
 
 def remove_stopwords(tokens, stopword_list):
     """
     remove palavras de passagem
     """
-    ls = []
+    output = []
 
     for tk_line in tokens:
         new_tokens = []
@@ -126,15 +127,15 @@ def remove_stopwords(tokens, stopword_list):
             if word.lower() not in stopword_list:
                 new_tokens.append(word) 
             
-        ls.append(new_tokens)
+        output.append(new_tokens)
         
-    return ls
+    return output
 
 def apply_stemmer(tokens):
     """
     Aplica o stemmer aos tokes
     """
-    ls = []
+    output = []
     stemmer = nltk.stem.RSLPStemmer()
 
     for tk_line in tokens:
@@ -144,15 +145,15 @@ def apply_stemmer(tokens):
             word = str(stemmer.stem(word))
             new_tokens.append(word) 
             
-        ls.append(new_tokens)
+        output.append(new_tokens)
         
-    return ls
+    return output
 
 def untokenize_text(tokens):
     """
     destokeniza
     """
-    ls = []
+    output = []
 
     for tk_line in tokens:
         new_line = ''
@@ -160,9 +161,9 @@ def untokenize_text(tokens):
         for word in tk_line:
             new_line += word + ' '
             
-        ls.append(new_line)
+        output.append(new_line)
         
-    return ls
+    return output
 
 def get_text_cloud(tokens):
     """
@@ -183,10 +184,10 @@ def get_freq_dist_list(tokens):
     fprepara os tokens para obter a lista de frequencia das palavras usando FreqDist
     from nltk.probability import FreqDist (nao curto muito essa abordagem aqui)
     """
-    ls = []
+    output = []
 
     for tk_line in tokens:
         for word in tk_line:
-            ls.append(word)
+            output.append(word)
 
-    return ls
+    return output
