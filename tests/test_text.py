@@ -1,6 +1,6 @@
 import unittest
 
-from text.text import (remove_emoticons, tokenize_text, untokenize_text,
+from text.text import (remove_url ,remove_emoticons, tokenize_text, untokenize_text,
                        get_text_cloud, get_freq_dist_list)
 
 
