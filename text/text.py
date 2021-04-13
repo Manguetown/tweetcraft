@@ -1,35 +1,46 @@
-def remove_url(data):
-    """
-    remove a ocorrencia de urls em blocos de texto
+from nltk.tokenize import wordpunct_tokenize
+
+import re 
+
+
+def remove_url(data: str) -> list:
+    """Remove a ocorrencia de urls em blocos de texto.
+
+    Args:
+        data (str): bloco de texto que você quer remover os urls.
+
+    Returns:
+        list: lista com cada letra.
     """
 
-    import re # rodando esse script em notebooks, mesmo declarando o re precisei disso
-
-    ls = []
+    output = []
     words = ''
-    regexp1 = re.compile('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
-    regexp2 = re.compile('www?.(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
+    
+    http_str = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+    www_str = 'www?.(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+
+    http_exp = re.compile(http_str)
+    www_exp = re.compile(www_str)
+
+    url_exps = [http_exp, www_exp]
     
     for line in data:
-        urls = regexp1.findall(line)
 
-        for u in urls:
-            line = line.replace(u, ' ')
-
-        urls = regexp2.findall(line)
-
-        for u in urls:
-            line = line.replace(u, ' ')
+        for exp in url_exps:
+            urls = exp.findall(line)
+            for u in urls:
+                line = line.replace(u, ' ')    
             
-        ls.append(line)
-    return ls
+        output.append(line)
+    
+    return output
 
 def remove_regex(data, regex_pattern):
     """
     remove um dado padrão regex
     """
 
-    import re
+
     ls = []
     words = ''
     
@@ -62,7 +73,6 @@ def tokenize_text(data):
     """
     tokeniza
     """
-    from nltk.tokenize import wordpunct_tokenize
     ls = []
 
     for line in data:
@@ -113,7 +123,6 @@ def apply_stemmer(tokens):
     """
     Aplica o stemmer aos tokes
     """
-    #from 
     ls = []
     stemmer = nltk.stem.RSLPStemmer()
 
@@ -170,19 +179,3 @@ def get_freq_dist_list(tokens):
             ls.append(word)
 
     return ls
-
-  #  def get_accuracy(matrix):
-  #      acc = 0
-  #      n = 0
-  #      total = 0
-        
-  #      for i in range(0, len(matrix)):
-  #          for j in range(0, len(matrix)):
-  #              if(i == j): 
-  #                  n += matrix[i,j]
-                
-  #              total += matrix[i,j]
-                
-  #      acc = n / total
-  #      return acc
-
