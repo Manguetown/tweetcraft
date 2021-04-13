@@ -1,0 +1,13 @@
+name: test and lint with nox
+
+on: [push, pull_request]
+
+jobs: 
+
+  build: 
+    runs-on: ubuntu-latest
+    
+  steps:
+    - uses: actions/checkout@v2
+    - uses: excitedleigh/setup-nox@1.0.0
+    - run: nox
