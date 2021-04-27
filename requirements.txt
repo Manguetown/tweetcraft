@@ -13,7 +13,7 @@ nltk==3.6.1
 nox==2020.12.31
 numpy==1.19.5
 packaging==20.9
-pandas==1.2.4
+pandas==1.1.5
 pluggy==0.13.1
 py==1.10.0
 pyparsing==2.4.7
