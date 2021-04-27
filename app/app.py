@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 class ProcessText:
 	def __init__(self, path):
-        	self._df = pd.read_csv(path + 'tweets.csv', sep='\t')
+        self._df = pd.read_csv(path + 'tweets.csv', sep='\t')
    		self.tweets = None
 
 	@staticmethod
@@ -50,7 +50,6 @@ hash = st.text_input('Scrape Twitter for your target Hashtag! ;)')
 ScrapeHashtagTwint(hash, horadia)
 
 if hash:
-    df = pd.read_csv(hash + 'tweets.csv', sep='\t')
     text = ProcessText(hash)
     remove_columns = ['id', 'conversation_id', 'created_at', 'date', 'time', 'timezone',
             'user_id', 'username', 'name', 'place',  'language', 'mentions',
@@ -64,6 +63,7 @@ if hash:
     WC = TextProcess.get_text_cloud(text.tokenized_text)
 
     word_cloud = WordCloud(max_font_size = 500, width = 500, height = 535)
+
     word_cloud.generate(WC)
     imagem = plt.figure(figsize = (16, 9))
     plt.imshow(word_cloud)
