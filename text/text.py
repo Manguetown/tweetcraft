@@ -1,16 +1,17 @@
 import nltk
 from nltk.tokenize import wordpunct_tokenize
-
 import re
 
-class TextProcess
-    def __init__(data):
+
+class TextProcess:
+    def __init__(self):
         pass
-    def remove_url(data: str) -> list:
+
+    def remove_url(self: str) -> list:
         """Remove a ocorrencia de urls em blocos de texto.
 
         Args:
-            data (str): bloco de texto que você quer remover os urls.
+        self(str): bloco de texto que você quer remover os urls.
 
         Returns:
             list: lista com cada letra.
@@ -22,14 +23,14 @@ class TextProcess
                     r"[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
 
         www_str = (r"www?.(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|" +
-                r"(?:%[0-9a-fA-F][0-9a-fA-F]))+")
+                   r"(?:%[0-9a-fA-F][0-9a-fA-F]))+")
 
         http_exp = re.compile(http_str)
         www_exp = re.compile(www_str)
 
         url_exps = [http_exp, www_exp]
 
-        for line in data:
+        for line in self:
 
             for exp in url_exps:
                 urls = exp.findall(line)
@@ -40,15 +41,14 @@ class TextProcess
 
         return output
 
-
-    def remove_regex(data, regex_pattern):
+    def remove_regex(self, regex_pattern):
         """
         remove um dado padrão regex
         """
 
         output = []
 
-        for line in data:
+        for line in self:
             matches = re.finditer(regex_pattern, line)
 
             for m in matches:
@@ -58,12 +58,11 @@ class TextProcess
 
         return output
 
-
-    def remove_emoticons(data: str) -> list:
+    def remove_emoticons(self: str) -> list:
         """Remove emoticons de um dado texto
 
         Args:
-            data (str): Texto no qual quer remover emoticons
+        self(str): Texto no qual quer remover emoticons
 
         Returns:
             list: lista de caracteres sem emoticon
@@ -80,33 +79,31 @@ class TextProcess
 
         output = []
 
-        for line in data:
+        for line in self:
             line = emoticon_regex.sub(r'', line)
 
             output.append(line)
 
         return output
 
-
-    def tokenize_text(data):
+    def tokenize_text(self):
         """
         tokeniza
         """
 
         output = []
 
-        for line in data:
+        for line in self:
             tokens = wordpunct_tokenize(line)
             output.append(tokens)
 
         return output
 
-
     def apply_standardization(tokens, std_list):
         """
         padroniza
 
-        exemplo de std_list : std_list = {'eh': 'é', 'vc': 'você' ... etc}
+        exemplo de std_list : std_list = {'eh': 'é', 'vc': 'você' ...}
         """
 
         output = []
@@ -123,7 +120,6 @@ class TextProcess
             output.append(new_tokens)
 
         return output
-
 
     def remove_stopwords(tokens, stopword_list):
         """
@@ -142,7 +138,6 @@ class TextProcess
             output.append(new_tokens)
 
         return output
-
 
     def apply_stemmer(tokens):
         """
@@ -163,7 +158,6 @@ class TextProcess
 
         return output
 
-
     def untokenize_text(tokens):
         """
         destokeniza
@@ -181,7 +175,6 @@ class TextProcess
 
         return output
 
-
     def get_text_cloud(tokens):
         """
         faz a nuvem
@@ -196,13 +189,12 @@ class TextProcess
 
         return text
 
-
     def get_freq_dist_list(tokens):
         """
         prepara os tokens para obter a lista de frequencia das palavras
         usando FreqDist
 
-        from nltk.probability import FreqDist (nao curto muito essa abordagem aqui)
+        from nltk.probability import FreqDist
         """
         output = []
 
