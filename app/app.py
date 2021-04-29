@@ -9,35 +9,35 @@ from scrape.ScrapeTwint import ScrapeHashtagTwint
 from datetime import datetime, timedelta
 
 class ProcessText:
-	def __init__(self, path):
+    def __init__(self, path):
         self._df = pd.read_csv(path + 'tweets.csv', sep='\t')
-   		self.tweets = None
+        self.tweets = None
 
-	@staticmethod
-	def data(self):
-		return self._df
+    @staticmethod
+    def data(self):
+        return self._df
 
-	@staticmethod
-	def tokenized_text(self):
-		return self.tweets_tokenized
+    @staticmethod
+    def tokenized_text(self):
+        return self.tweets_tokenized
 
-	def remove_columns(self, columns_remove):
-		self._df = self._df.drop(columns_remove, axis=1)
-		return self
+    def remove_columns(self, columns_remove):
+        self._df = self._df.drop(columns_remove, axis=1)
+        return self
 
-	def select_tweets(self):
-		self.tweets = self._df['tweet']
-		return self
+    def select_tweets(self):
+        self.tweets = self._df['tweet']
+        return self
 
-	def remove_url(self):
-		if self.tweets == None:
-			raise AttributeError("Tweets not defined")
-		self.tweets = TextProcess.remove_url(list(self.tweets))
-		return self
+    def remove_url(self):
+        if self.tweets == None:
+            raise AttributeError("Tweets not defined")
+        self.tweets = TextProcess.remove_url(list(self.tweets))
+        return self
 
-	def tokenize(self):
-		self.tweets_tokenized = TextProcess.tokenize_text(self.tweets)
-		return self
+    def tokenize(self):
+        self.tweets_tokenized = TextProcess.tokenize_text(self.tweets)
+        return self
 
 
 d = datetime.today() - timedelta(hours=0, minutes=5)

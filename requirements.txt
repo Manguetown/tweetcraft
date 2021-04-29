@@ -9,6 +9,7 @@ importlib-metadata==3.10.1
 importlib-resources==5.1.2
 iniconfig==1.1.1
 joblib==1.0.1
+matplotlib==3.4.1
 nltk==3.6.1
 nox==2020.12.31
 numpy==1.19.5
