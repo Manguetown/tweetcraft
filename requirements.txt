@@ -27,4 +27,5 @@ tqdm==4.60.0
 twint==2.1.20
 typing-extensions==3.7.4.3
 virtualenv==20.4.3
+wordcloud==1.8.1
 zipp==3.4.1
