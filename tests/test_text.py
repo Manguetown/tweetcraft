@@ -1,5 +1,5 @@
 import unittest
-from text.text import TextProcess as tp
+from NLP.text.text import TextProcess as tp
 
 
 class TestTextProcessing(unittest.TestCase):
