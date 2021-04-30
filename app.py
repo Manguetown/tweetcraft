@@ -51,7 +51,7 @@ ScrapeHashtagTwint(hash, horadia)
 
 if hash:
     text = ProcessText(hash)
-    ColumnsToRemove = ['id', 'conversation_id', 'created_at', 'date', 'time', 'timezone',
+columns_to_temove = ['id', 'conversation_id', 'created_at', 'date', 'time', 'timezone',
             'user_id', 'username', 'name', 'place',  'language', 'mentions',
             'urls', 'photos', 'replies_count', 'retweets_count', 'likes_count',
             'hashtags', 'cashtags', 'link', 'retweet', 'quote_url', 'video',
@@ -73,4 +73,3 @@ if hash:
 
 st.button("Re-run")
 #
-
