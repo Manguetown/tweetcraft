@@ -1,6 +1,3 @@
-
-
-
 import twint
 import os
 

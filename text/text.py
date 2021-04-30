@@ -31,12 +31,10 @@ class TextProcess:
         url_exps = [http_exp, www_exp]
 
         for line in self:
-
             for exp in url_exps:
                 urls = exp.findall(line)
                 for u in urls:
                     line = line.replace(u, ' ')
-
             output.append(line)
 
         return output
