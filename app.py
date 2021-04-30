@@ -30,8 +30,8 @@ class ProcessText:
         return self
 
     def remove_url(self):
-        if self.tweets == None:
-            raise AttributeError("Tweets not defined")
+        #if self.tweets == None:
+        #    raise AttributeError("Tweets not defined")
         self.tweets = TextProcess.remove_url(list(self.tweets))
         return self
 
@@ -60,7 +60,7 @@ if hash:
             'trans_dest']
     text = text.remove_columns(ColumnsToRemove).select_tweets().remove_url().tokenize()
 
-    WC = TextProcess.get_text_cloud(text.tokenized_text)
+    WC = TextProcess.get_text_cloud(text.tweets_tokenized)
 
     word_cloud = WordCloud(max_font_size = 500, width = 500, height = 535)
 
