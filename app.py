@@ -58,7 +58,7 @@ columns_to_temove = ['id', 'conversation_id', 'created_at', 'date', 'time', 'tim
             'thumbnail', 'near', 'geo', 'source', 'user_rt_id', 'user_rt',
             'retweet_id', 'reply_to', 'retweet_date', 'translate', 'trans_src',
             'trans_dest']
-    text = text.remove_columns(ColumnsToRemove).select_tweets().remove_url().tokenize()
+    text = text.remove_columns(columns_to_remove).select_tweets().remove_url().tokenize()
 
     WC = TextProcess.get_text_cloud(text.tweets_tokenized)
 
