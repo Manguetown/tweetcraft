@@ -50,7 +50,6 @@ class WriteApp:
         return imagem
 
 
-
 d = datetime.today() - timedelta(hours=0, minutes=5)
 horadia = d.strftime("%Y-%m-%d %H:%M:%S")
 
