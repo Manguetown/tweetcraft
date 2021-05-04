@@ -47,7 +47,7 @@ class WriteApp:
         plt.imshow(word_cloud)
         plt.axis('off')
         plt.show()
-
+return imagem
 
 
 d = datetime.today() - timedelta(hours=0, minutes=5)
