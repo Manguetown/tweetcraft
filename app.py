@@ -47,6 +47,7 @@ class WriteApp:
         plt.imshow(word_cloud)
         plt.axis('off')
         plt.show()
+        return imagem
 
 
 
