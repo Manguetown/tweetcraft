@@ -11,7 +11,6 @@ def tests_coverage(session):
     session.run("coverage", "run",  "-m",  "--omit=.nox/*", "pytest")
     session.run("coverage", "report", "--fail-under=70", "--show-missing")
     session.run("coverage", "erase")
-    
 
 
 @nox.session
