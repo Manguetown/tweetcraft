@@ -1,14 +1,13 @@
 import nltk
 from nltk.tokenize import wordpunct_tokenize
-
 import re
 
 
-def remove_url(data: str) -> list:
+def remove_url(text: str) -> list:
     """Remove a ocorrencia de urls em blocos de texto.
 
     Args:
-        data (str): bloco de texto que você quer remover os urls.
+    text(str): bloco de texto que você quer remover os urls.
 
     Returns:
         list: lista com cada letra.
@@ -27,26 +26,24 @@ def remove_url(data: str) -> list:
 
     url_exps = [http_exp, www_exp]
 
-    for line in data:
-
+    for line in text:
         for exp in url_exps:
             urls = exp.findall(line)
             for u in urls:
                 line = line.replace(u, ' ')
-
         output.append(line)
 
     return output
 
 
-def remove_regex(data, regex_pattern):
+def remove_regex(text, regex_pattern):
     """
     remove um dado padrão regex
     """
 
     output = []
 
-    for line in data:
+    for line in text:
         matches = re.finditer(regex_pattern, line)
 
         for m in matches:
@@ -57,11 +54,11 @@ def remove_regex(data, regex_pattern):
     return output
 
 
-def remove_emoticons(data: str) -> list:
+def remove_emoticons(text: str) -> list:
     """Remove emoticons de um dado texto
 
     Args:
-        data (str): Texto no qual quer remover emoticons
+    text(str): Texto no qual quer remover emoticons
 
     Returns:
         list: lista de caracteres sem emoticon
@@ -78,7 +75,7 @@ def remove_emoticons(data: str) -> list:
 
     output = []
 
-    for line in data:
+    for line in text:
         line = emoticon_regex.sub(r'', line)
 
         output.append(line)
@@ -86,30 +83,30 @@ def remove_emoticons(data: str) -> list:
     return output
 
 
-def tokenize_text(data):
+def tokenize_text(text):
     """
     tokeniza
     """
 
     output = []
 
-    for line in data:
+    for line in text:
         tokens = wordpunct_tokenize(line)
         output.append(tokens)
 
     return output
 
 
-def apply_standardization(tokens, std_list):
+def apply_standardization(text: str, std_list):
     """
     padroniza
 
-    exemplo de std_list : std_list = {'eh': 'é', 'vc': 'você' ... etc}
+    exemplo de std_list : std_list = {'eh': 'é', 'vc': 'você' ...}
     """
 
     output = []
 
-    for tk_line in tokens:
+    for tk_line in text:
         new_tokens = []
 
         for word in tk_line:
@@ -200,7 +197,7 @@ def get_freq_dist_list(tokens):
     prepara os tokens para obter a lista de frequencia das palavras
     usando FreqDist
 
-    from nltk.probability import FreqDist (nao curto muito essa abordagem aqui)
+    from nltk.probability import FreqDist
     """
     output = []
 
