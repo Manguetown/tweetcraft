@@ -11,7 +11,7 @@ def tests(session):
 def lint(session):
     session.install("flake8")
     
-    folders = ["text", "tests"]
+    folders = ["text", "tests", "scrape", "app"]
     
     for folder_name in folders:
         for files in os.listdir(folder_name):

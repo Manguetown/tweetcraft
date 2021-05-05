@@ -1,211 +1,203 @@
 import nltk
 from nltk.tokenize import wordpunct_tokenize
-
 import re
 
 
-def remove_url(data: str) -> list:
-    """Remove a ocorrencia de urls em blocos de texto.
+class TextProcess:
+    def __init__(self):
+        pass
 
-    Args:
-        data (str): bloco de texto que você quer remover os urls.
+    def remove_url(self: str) -> list:
+        """Remove a ocorrencia de urls em blocos de texto.
 
-    Returns:
-        list: lista com cada letra.
-    """
+        Args:
+        self(str): bloco de texto que você quer remover os urls.
 
-    output = []
+        Returns:
+            list: lista com cada letra.
+        """
 
-    http_str = (r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|" +
-                r"[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
+        output = []
 
-    www_str = (r"www?.(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|" +
-               r"(?:%[0-9a-fA-F][0-9a-fA-F]))+")
+        http_str = (r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|" +
+                    r"[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
 
-    http_exp = re.compile(http_str)
-    www_exp = re.compile(www_str)
+        www_str = (r"www?.(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|" +
+                   r"(?:%[0-9a-fA-F][0-9a-fA-F]))+")
 
-    url_exps = [http_exp, www_exp]
+        http_exp = re.compile(http_str)
+        www_exp = re.compile(www_str)
 
-    for line in data:
+        url_exps = [http_exp, www_exp]
 
-        for exp in url_exps:
-            urls = exp.findall(line)
-            for u in urls:
-                line = line.replace(u, ' ')
+        for line in self:
+            for exp in url_exps:
+                urls = exp.findall(line)
+                for u in urls:
+                    line = line.replace(u, ' ')
+            output.append(line)
 
-        output.append(line)
+        return output
 
-    return output
+    def remove_regex(self, regex_pattern):
+        """
+        remove um dado padrão regex
+        """
 
+        output = []
 
-def remove_regex(data, regex_pattern):
-    """
-    remove um dado padrão regex
-    """
+        for line in self:
+            matches = re.finditer(regex_pattern, line)
 
-    output = []
+            for m in matches:
+                line = re.sub(m.group().strip(), '', line)
 
-    for line in data:
-        matches = re.finditer(regex_pattern, line)
+            output.append(line)
 
-        for m in matches:
-            line = re.sub(m.group().strip(), '', line)
+        return output
 
-        output.append(line)
+    def remove_emoticons(self: str) -> list:
+        """Remove emoticons de um dado texto
 
-    return output
+        Args:
+        self(str): Texto no qual quer remover emoticons
 
+        Returns:
+            list: lista de caracteres sem emoticon
+        """
 
-def remove_emoticons(data: str) -> list:
-    """Remove emoticons de um dado texto
+        emoticon_regex = re.compile(
+            pattern="["
+            u"\U0001F600-\U0001F64F"  # emoticons
+            u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+            u"\U0001F680-\U0001F6FF"  # transport & map symbols
+            u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+            "]+",
+            flags=re.UNICODE)
 
-    Args:
-        data (str): Texto no qual quer remover emoticons
+        output = []
 
-    Returns:
-        list: lista de caracteres sem emoticon
-    """
+        for line in self:
+            line = emoticon_regex.sub(r'', line)
 
-    emoticon_regex = re.compile(
-        pattern="["
-        u"\U0001F600-\U0001F64F"  # emoticons
-        u"\U0001F300-\U0001F5FF"  # symbols & pictographs
-        u"\U0001F680-\U0001F6FF"  # transport & map symbols
-        u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
-        "]+",
-        flags=re.UNICODE)
+            output.append(line)
 
-    output = []
+        return output
 
-    for line in data:
-        line = emoticon_regex.sub(r'', line)
+    def tokenize_text(self):
+        """
+        tokeniza
+        """
 
-        output.append(line)
+        output = []
 
-    return output
+        for line in self:
+            tokens = wordpunct_tokenize(line)
+            output.append(tokens)
 
+        return output
 
-def tokenize_text(data):
-    """
-    tokeniza
-    """
+    def apply_standardization(tokens, std_list):
+        """
+        padroniza
 
-    output = []
+        exemplo de std_list : std_list = {'eh': 'é', 'vc': 'você' ...}
+        """
 
-    for line in data:
-        tokens = wordpunct_tokenize(line)
-        output.append(tokens)
+        output = []
 
-    return output
+        for tk_line in tokens:
+            new_tokens = []
 
+            for word in tk_line:
+                if word.lower() in std_list:
+                    word = std_list[word.lower()]
 
-def apply_standardization(tokens, std_list):
-    """
-    padroniza
-
-    exemplo de std_list : std_list = {'eh': 'é', 'vc': 'você' ... etc}
-    """
-
-    output = []
-
-    for tk_line in tokens:
-        new_tokens = []
-
-        for word in tk_line:
-            if word.lower() in std_list:
-                word = std_list[word.lower()]
-
-            new_tokens.append(word)
-
-        output.append(new_tokens)
-
-    return output
-
-
-def remove_stopwords(tokens, stopword_list):
-    """
-    remove palavras de passagem
-    """
-
-    output = []
-
-    for tk_line in tokens:
-        new_tokens = []
-
-        for word in tk_line:
-            if word.lower() not in stopword_list:
                 new_tokens.append(word)
 
-        output.append(new_tokens)
+            output.append(new_tokens)
 
-    return output
+        return output
 
+    def remove_stopwords(tokens, stopword_list):
+        """
+        remove palavras de passagem
+        """
 
-def apply_stemmer(tokens):
-    """
-    Aplica o stemmer aos tokes
-    """
+        output = []
 
-    output = []
-    stemmer = nltk.stem.RSLPStemmer()
+        for tk_line in tokens:
+            new_tokens = []
 
-    for tk_line in tokens:
-        new_tokens = []
+            for word in tk_line:
+                if word.lower() not in stopword_list:
+                    new_tokens.append(word)
 
-        for word in tk_line:
-            word = str(stemmer.stem(word))
-            new_tokens.append(word)
+            output.append(new_tokens)
 
-        output.append(new_tokens)
+        return output
 
-    return output
+    def apply_stemmer(tokens):
+        """
+        Aplica o stemmer aos tokes
+        """
 
+        output = []
+        stemmer = nltk.stem.RSLPStemmer()
 
-def untokenize_text(tokens):
-    """
-    destokeniza
-    """
+        for tk_line in tokens:
+            new_tokens = []
 
-    output = []
+            for word in tk_line:
+                word = str(stemmer.stem(word))
+                new_tokens.append(word)
 
-    for tk_line in tokens:
-        new_line = ''
+            output.append(new_tokens)
 
-        for word in tk_line:
-            new_line += word + ' '
+        return output
 
-        output.append(new_line)
+    def untokenize_text(tokens):
+        """
+        destokeniza
+        """
 
-    return output
+        output = []
 
+        for tk_line in tokens:
+            new_line = ''
 
-def get_text_cloud(tokens):
-    """
-    faz a nuvem
-    """
+            for word in tk_line:
+                new_line += word + ' '
 
-    text = ''
+            output.append(new_line)
 
-    for tk_line in tokens:
+        return output
 
-        for word in tk_line:
-            text += word + ' '
+    def get_text_cloud(tokens):
+        """
+        faz a nuvem
+        """
 
-    return text
+        text = ''
 
+        for tk_line in tokens:
 
-def get_freq_dist_list(tokens):
-    """
-    prepara os tokens para obter a lista de frequencia das palavras
-    usando FreqDist
+            for word in tk_line:
+                text += word + ' '
 
-    from nltk.probability import FreqDist (nao curto muito essa abordagem aqui)
-    """
-    output = []
+        return text
 
-    for tk_line in tokens:
-        for word in tk_line:
-            output.append(word)
+    def get_freq_dist_list(tokens):
+        """
+        prepara os tokens para obter a lista de frequencia das palavras
+        usando FreqDist
 
-    return output
+        from nltk.probability import FreqDist
+        """
+        output = []
+
+        for tk_line in tokens:
+            for word in tk_line:
+                output.append(word)
+
+        return output
