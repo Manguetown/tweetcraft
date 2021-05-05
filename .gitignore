@@ -3,3 +3,6 @@ nlp-env/
 __pycache__/
 .pytest_cache/
 .nox/
+*.csv
+htmlcov/
+.coverage
