@@ -19,7 +19,7 @@ def remove_url(text: str) -> list:
                 r"[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
 
     www_str = (r"www?.(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|" +
-                r"(?:%[0-9a-fA-F][0-9a-fA-F]))+")
+               r"(?:%[0-9a-fA-F][0-9a-fA-F]))+")
 
     http_exp = re.compile(http_str)
     www_exp = re.compile(www_str)
@@ -34,6 +34,7 @@ def remove_url(text: str) -> list:
         output.append(line)
 
     return output
+
 
 def remove_regex(text, regex_pattern):
     """
@@ -51,6 +52,7 @@ def remove_regex(text, regex_pattern):
         output.append(line)
 
     return output
+
 
 def remove_emoticons(text: str) -> list:
     """Remove emoticons de um dado texto
@@ -80,6 +82,7 @@ def remove_emoticons(text: str) -> list:
 
     return output
 
+
 def tokenize_text(text):
     """
     tokeniza
@@ -92,6 +95,7 @@ def tokenize_text(text):
         output.append(tokens)
 
     return output
+
 
 def apply_standardization(text: str, std_list):
     """
@@ -115,6 +119,7 @@ def apply_standardization(text: str, std_list):
 
     return output
 
+
 def remove_stopwords(tokens, stopword_list):
     """
     remove palavras de passagem
@@ -132,6 +137,7 @@ def remove_stopwords(tokens, stopword_list):
         output.append(new_tokens)
 
     return output
+
 
 def apply_stemmer(tokens):
     """
@@ -152,6 +158,7 @@ def apply_stemmer(tokens):
 
     return output
 
+
 def untokenize_text(tokens):
     """
     destokeniza
@@ -169,6 +176,7 @@ def untokenize_text(tokens):
 
     return output
 
+
 def get_text_cloud(tokens):
     """
     faz a nuvem
@@ -182,6 +190,7 @@ def get_text_cloud(tokens):
             text += word + ' '
 
     return text
+
 
 def get_freq_dist_list(tokens):
     """
