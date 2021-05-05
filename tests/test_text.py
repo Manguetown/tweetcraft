@@ -1,5 +1,5 @@
 import unittest
-from text.text import TextProcess as tp
+from text import textprocess as tp
 
 
 class TestTextProcessing(unittest.TestCase):
@@ -27,6 +27,11 @@ class TestTextProcessing(unittest.TestCase):
                     'd ', 'e ', 'f ',
                     'g '
                     ]
+        self.assertEqual(got, expected)
+
+    def test_remove_regex(self):
+        got = tp.remove_regex(['remove pattern'], "remove pattern")
+        expected = [""]
         self.assertEqual(got, expected)
 
     def test_get_text_cloud(self):

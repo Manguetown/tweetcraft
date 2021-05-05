@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
-from text.text import TextProcess
+from text import textprocess
 from scrape.ScrapeTwint import ScrapeHashtagTwint
 from datetime import datetime, timedelta
 
@@ -32,21 +32,20 @@ class WriteApp:
     def remove_url(self):
         #if self.tweets == None:
         #    raise AttributeError("Tweets not defined")
-        self.tweets = TextProcess.remove_url(list(self.tweets))
+        self.tweets = textprocess.remove_url(list(self.tweets))
         return self
 
     def tokenize(self):
-        self.tweets_tokenized = TextProcess.tokenize_text(self.tweets)
+        self.tweets_tokenized = textprocess.tokenize_text(self.tweets)
         return self
     
     def generate_wordcloud(self, max_font_size: int, width: int, height: int, figsize: tuple):
-        WC = TextProcess.get_text_cloud(self.tweets_tokenized)
+        WC = textprocess.get_text_cloud(self.tweets_tokenized)
         word_cloud = WordCloud(max_font_size = max_font_size, width = width, height = height)
         word_cloud.generate(WC)
         imagem = plt.figure(figsize = figsize)
         plt.imshow(word_cloud)
         plt.axis('off')
-        plt.show()
         return imagem
 
 
