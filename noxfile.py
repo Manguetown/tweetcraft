@@ -24,7 +24,7 @@ def lint(session):
     for folder_name in folders:
         for files in os.listdir(folder_name):
             if files[0] not in ['_', '.']:
-                session.run("flake8", f"{folder_name}/{files}")
+                session.run("flake8", f"src/{folder_name}/{files}")
 
     out_files = ["app.py", "noxfile.py"]
 
