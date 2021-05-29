@@ -4,7 +4,7 @@ import os
 
 
 @nox.session
-def tests_coverage(session):
+def tests_and_coverage(session):
     """ Install all requirements, run pytest.
     """
     session.install("-r", "requirements.txt")
@@ -22,11 +22,13 @@ def lint(session):
     folders = ["text", "tests", "scrape"]
 
     for folder_name in folders:
-        for files in os.listdir(folder_name):
+        for files in os.listdir("src/" + folder_name):
             if files[0] not in ['_', '.']:
                 session.run("flake8", f"src/{folder_name}/{files}")
 
-    out_files = ["app.py", "noxfile.py"]
+    out_files = ["app.py"]
 
     for files in out_files:
-        session.run("flake8", f"{files}")
+        session.run("flake8", f"src/{files}")
+
+    session.run("flake8", "noxfile.py")
