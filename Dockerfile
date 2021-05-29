@@ -1,5 +1,7 @@
 FROM python:3.8-slim-buster
 
+# ENV PORT=8501
+
 # Install git
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git \
@@ -15,8 +17,6 @@ WORKDIR /app
 # Install dependencies
 RUN pip install -r requirements.txt
 
-EXPOSE 8501
+EXPOSE $PORT
 
-ENTRYPOINT ["streamlit", "run"]
-
-CMD ["app.py"]
+CMD streamlit run app.py --server.port $PORT
