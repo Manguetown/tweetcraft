@@ -1,6 +1,6 @@
 name: build and test on [Python 3.6, 3.7, 3.8]
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs: 
 
