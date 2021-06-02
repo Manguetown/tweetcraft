@@ -35,6 +35,15 @@ class WriteApp:
     def tokenize(self):
         self.tweets_tokenized = textprocess.tokenize_text(self.tweets)
         return self
+    
+    def remove_punctuation(self):
+        self.tweets = textprocess.remove_punctuation(self.tweets)
+        return self
+    
+    def remove_stopwords(self):
+        stopwords = list(pd.read_fwf('stopwords.txt', header = None)[0])
+        self.tweets_tokenized = textprocess.remove_stopwords(text.tweets_tokenized, stopwords)
+        return self
 
     def generate_wordcloud(self, max_font_size: int,
                            width: int, height: int, figsize: tuple):
@@ -69,7 +78,9 @@ if hash:
                          'retweet_id', 'reply_to', 'retweet_date',
                          'translate', 'trans_src', 'trans_dest']
     text = text.remove_columns(columns_to_temove)
-    text = text.select_tweets().remove_url().tokenize()
+    text = text.select_tweets().remove_url().remove_punctuation().tokenize().remove_stopwords()
+
+    
 
     st.write(text.generate_wordcloud(500, 500, 535, (16, 9)))
 

@@ -1,6 +1,7 @@
 import nltk
 from nltk.tokenize import wordpunct_tokenize
 import re
+import string
 
 
 def remove_url(text: str) -> list:
@@ -81,6 +82,17 @@ def remove_emoticons(text: str) -> list:
         output.append(line)
 
     return output
+
+def remove_punctuation(text):
+
+        output = []
+
+        for line in text:
+            line = line.translate(str.maketrans('', '', string.punctuation))
+            
+            output.append(line)
+        
+        return output
 
 
 def tokenize_text(text):
