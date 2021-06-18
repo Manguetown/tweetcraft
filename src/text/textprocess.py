@@ -84,6 +84,15 @@ def remove_emoticons(text: str) -> list:
     return output
 
 def remove_punctuation(text):
+    """Remove emoticons de um dado texto
+    
+    Args:
+        list: lista de textos nos quais quer remover pontuacao
+
+    Returns:
+        list: lista de textos sem pontuacao
+    
+    """
 
         output = []
 
