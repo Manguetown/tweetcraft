@@ -83,6 +83,7 @@ def remove_emoticons(text: str) -> list:
 
     return output
 
+
 def remove_punctuation(text):
     """Remove emoticons de um dado texto
     
@@ -94,14 +95,14 @@ def remove_punctuation(text):
     
     """
 
-        output = []
+    output = []
 
-        for line in text:
-            line = line.translate(str.maketrans('', '', string.punctuation))
-            
-            output.append(line)
+    for line in text:
+        line = line.translate(str.maketrans('', '', string.punctuation))
         
-        return output
+        output.append(line)
+    
+    return output
 
 
 def tokenize_text(text):
