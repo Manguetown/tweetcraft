@@ -44,7 +44,7 @@ class WriteApp:
 
     def remove_stopwords(self):
         stopwords = list(pd.read_fwf('stopwords.txt', header=None)[0])
-        self.tweets_tokenized = textprocess.remove_stopwords( 
+        self.tweets_tokenized = textprocess.remove_stopwords(
                                 text.tweets_tokenized, stopwords)
         return self
 
@@ -65,7 +65,7 @@ class WriteApp:
         return self
 
 
-lingua = st.sidebar.selectbox('',['pt', 'en'])
+lingua = st.sidebar.selectbox('', ['pt', 'en'])
 
 if lingua == 'en':
 
@@ -80,7 +80,8 @@ if lingua == 'en':
 
     st.write("Welcome to Tweetcraft!")
 
-    st.write("Enjoy a brief journey into the wonders of Twitter scraping and processing")
+    st.write("Enjoy a brief journey into the wonders of \
+              Twitter scraping and processing")
 
     st.write("")
 
@@ -99,7 +100,7 @@ if lingua == 'en':
             will make the process slower")
 
     timelapse = st.number_input('Twitter in the last N minutes!', 
-                                 value=5, max_value=30, min_value=1)
+                                value=5, max_value=30, min_value=1)
 
     d = datetime.today() - timedelta(hours=0, minutes=timelapse)
     horadia = d.strftime("%Y-%m-%d %H:%M:%S")
@@ -108,10 +109,11 @@ if lingua == 'en':
 
     if hash:
         text = WriteApp(hash)
-        columns_to_temove = ['id', 'conversation_id', 'created_at', 'date',
-                             'time', 'timezone', 'user_id', 'username', 'name',
-                             'place',  'language', 'mentions', 'urls', 'photos',
-                             'replies_count', 'retweets_count', 'likes_count',
+        columns_to_temove = ['id', 'conversation_id', 'created_at', 
+                             'time', 'timezone', 'user_id', 'username', 
+                             'name', 'place',  'language', 'mentions', 
+                             'urls', 'photos', 'replies_count', 
+                             'retweets_count', 'likes_count', 'date',
                              'hashtags', 'cashtags', 'link', 'retweet',
                              'quote_url', 'video', 'thumbnail', 'near',
                              'geo', 'source', 'user_rt_id', 'user_rt',
@@ -130,7 +132,7 @@ if lingua == 'en':
         st.write("")
 
         text.showrandomtweet()
-    
+
 elif lingua == 'pt':
 
     st.title('Tweetcraft')
@@ -163,8 +165,8 @@ elif lingua == 'pt':
             escolha! lembre-se que um N muito grande \
             deixa o processo mais lento")
 
-    timelapse = st.number_input('Twitter nos últimos N minutos!' \
-                                , value=5, max_value=30, min_value=1)
+    timelapse = st.number_input('Twitter nos últimos N minutos!', 
+                                 value=5, max_value=30, min_value=1)
 
     d = datetime.today() - timedelta(hours=0, minutes=timelapse)
     horadia = d.strftime("%Y-%m-%d %H:%M:%S")
@@ -173,17 +175,18 @@ elif lingua == 'pt':
 
     if hash:
         text = WriteApp(hash)
-        columns_to_temove = ['id', 'conversation_id', 'created_at', 'date',
-                             'time', 'timezone', 'user_id', 'username', 'name',
-                             'place',  'language', 'mentions', 'urls', 'photos',
-                             'replies_count', 'retweets_count', 'likes_count',
+        columns_to_temove = ['id', 'conversation_id', 'created_at', 
+                             'time', 'timezone', 'user_id', 'username', 
+                             'name', 'place',  'language', 'mentions', 
+                             'urls', 'photos', 'replies_count', 
+                             'retweets_count', 'likes_count', 'date',
                              'hashtags', 'cashtags', 'link', 'retweet',
                              'quote_url', 'video', 'thumbnail', 'near',
                              'geo', 'source', 'user_rt_id', 'user_rt',
                              'retweet_id', 'reply_to', 'retweet_date',
                              'translate', 'trans_src', 'trans_dest']
         text = text.remove_columns(columns_to_temove)
-        text = text.select_tweets().remove_url().remove_punctuation() 
+        text = text.select_tweets().remove_url().remove_punctuation()
         text = text.tokenize().remove_stopwords()
 
         st.write(text.generate_wordcloud(500, 500, 535, (16, 9)))
@@ -195,6 +198,6 @@ elif lingua == 'pt':
         st.write("")
 
         text.showrandomtweet()
-        
+
 
 st.button("Re-run")
