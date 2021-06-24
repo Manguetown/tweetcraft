@@ -1,6 +1,7 @@
 import nltk
 from nltk.tokenize import wordpunct_tokenize
 import re
+import string
 
 
 def remove_url(text: str) -> list:
@@ -78,6 +79,26 @@ def remove_emoticons(text: str) -> list:
     for line in text:
         line = emoticon_regex.sub(r'', line)
 
+        output.append(line)
+
+    return output
+
+
+def remove_punctuation(text):
+    """Remove emoticons de um dado texto
+
+    Args:
+        list: lista de textos nos quais quer remover pontuacao
+
+    Returns:
+        list: lista de textos sem pontuacao
+
+    """
+
+    output = []
+
+    for line in text:
+        line = line.translate(str.maketrans('', '', string.punctuation))
         output.append(line)
 
     return output
