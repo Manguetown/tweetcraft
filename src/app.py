@@ -111,7 +111,7 @@ if lingua == 'en':
         text = WriteApp(hash)
         columns_to_temove = ['id', 'conversation_id', 'created_at',
                              'time', 'timezone', 'user_id', 'username',
-                             'name', 'place',  'language', 'mentions', 
+                             'name', 'place',  'language', 'mentions',
                              'urls', 'photos', 'replies_count',
                              'retweets_count', 'likes_count', 'date',
                              'hashtags', 'cashtags', 'link', 'retweet',
