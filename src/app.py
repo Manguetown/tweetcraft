@@ -44,8 +44,8 @@ class WriteApp:
 
     def remove_stopwords(self):
         stopwords = list(pd.read_fwf('stopwords.txt', header=None)[0])
-        self.tweets_tokenized = textprocess.remove_stopwords( \
-        text.tweets_tokenized, stopwords)
+        self.tweets_tokenized = textprocess.remove_stopwords( 
+                                text.tweets_tokenized, stopwords)
         return self
 
     def generate_wordcloud(self, max_font_size: int,
@@ -64,7 +64,8 @@ class WriteApp:
         st.write(example)
         return self
 
-lingua = st.sidebar.selectbox('', ['pt', 'en'])
+
+lingua = st.sidebar.selectbox('',['pt', 'en'])
 
 if lingua == 'en':
 
@@ -75,9 +76,11 @@ if lingua == 'en':
     st.header("An App by @sa_nahum and @RioJanu")
 
     st.write("")
+    st.write("")
 
-    st.write("Welcome to Tweetcraft! Enjoy a brief journey \
-    into the wonders of Twitter scraping and processing")
+    st.write("Welcome to Tweetcraft!")
+
+    st.write("Enjoy a brief journey into the wonders of Twitter scraping and processing")
 
     st.write("")
 
@@ -95,8 +98,8 @@ if lingua == 'en':
             to input! remember a very large N \
             will make the process slower")
 
-    timelapse = st.number_input('Twitter in the last N minutes!' \
-                                , value=5, max_value=30, min_value=1)
+    timelapse = st.number_input('Twitter in the last N minutes!', 
+                                 value=5, max_value=30, min_value=1)
 
     d = datetime.today() - timedelta(hours=0, minutes=timelapse)
     horadia = d.strftime("%Y-%m-%d %H:%M:%S")
@@ -106,16 +109,16 @@ if lingua == 'en':
     if hash:
         text = WriteApp(hash)
         columns_to_temove = ['id', 'conversation_id', 'created_at', 'date',
-                            'time', 'timezone', 'user_id', 'username', 'name',
-                            'place',  'language', 'mentions', 'urls', 'photos',
-                            'replies_count', 'retweets_count', 'likes_count',
-                            'hashtags', 'cashtags', 'link', 'retweet',
-                            'quote_url', 'video', 'thumbnail', 'near',
-                            'geo', 'source', 'user_rt_id', 'user_rt',
-                            'retweet_id', 'reply_to', 'retweet_date',
-                            'translate', 'trans_src', 'trans_dest']
+                             'time', 'timezone', 'user_id', 'username', 'name',
+                             'place',  'language', 'mentions', 'urls', 'photos',
+                             'replies_count', 'retweets_count', 'likes_count',
+                             'hashtags', 'cashtags', 'link', 'retweet',
+                             'quote_url', 'video', 'thumbnail', 'near',
+                             'geo', 'source', 'user_rt_id', 'user_rt',
+                             'retweet_id', 'reply_to', 'retweet_date',
+                             'translate', 'trans_src', 'trans_dest']
         text = text.remove_columns(columns_to_temove)
-        text = text.select_tweets().remove_url().remove_punctuation() 
+        text = text.select_tweets().remove_url().remove_punctuation()
         text = text.tokenize().remove_stopwords()
 
         st.write(text.generate_wordcloud(500, 500, 535, (16, 9)))
@@ -137,9 +140,12 @@ elif lingua == 'pt':
     st.header("Um App de @sa_nahum e @RioJanu")
 
     st.write("")
+    st.write("")
 
-    st.write("Benvindo ao Tweetcraft! Curta uma breve jornada \
-    pelas maravilhas da extração e processamento de dados do Twitter")
+    st.write("Benvindo ao Tweetcraft!")
+
+    st.write("Curta uma breve jornada pelas maravilhas \
+            da extração e processamento de dados do Twitter")
 
     st.write("")
 
@@ -168,14 +174,14 @@ elif lingua == 'pt':
     if hash:
         text = WriteApp(hash)
         columns_to_temove = ['id', 'conversation_id', 'created_at', 'date',
-                            'time', 'timezone', 'user_id', 'username', 'name',
-                            'place',  'language', 'mentions', 'urls', 'photos',
-                            'replies_count', 'retweets_count', 'likes_count',
-                            'hashtags', 'cashtags', 'link', 'retweet',
-                            'quote_url', 'video', 'thumbnail', 'near',
-                            'geo', 'source', 'user_rt_id', 'user_rt',
-                            'retweet_id', 'reply_to', 'retweet_date',
-                            'translate', 'trans_src', 'trans_dest']
+                             'time', 'timezone', 'user_id', 'username', 'name',
+                             'place',  'language', 'mentions', 'urls', 'photos',
+                             'replies_count', 'retweets_count', 'likes_count',
+                             'hashtags', 'cashtags', 'link', 'retweet',
+                             'quote_url', 'video', 'thumbnail', 'near',
+                             'geo', 'source', 'user_rt_id', 'user_rt',
+                             'retweet_id', 'reply_to', 'retweet_date',
+                             'translate', 'trans_src', 'trans_dest']
         text = text.remove_columns(columns_to_temove)
         text = text.select_tweets().remove_url().remove_punctuation() 
         text = text.tokenize().remove_stopwords()
@@ -189,8 +195,6 @@ elif lingua == 'pt':
         st.write("")
 
         text.showrandomtweet()
-
-
-    # st.text()
+        
 
 st.button("Re-run")
