@@ -99,7 +99,7 @@ if lingua == 'en':
             to input! remember a very large N \
             will make the process slower")
 
-    timelapse = st.number_input('Twitter in the last N minutes!', 
+    timelapse = st.number_input('Twitter in the last N minutes!',
                                 value=5, max_value=30, min_value=1)
 
     d = datetime.today() - timedelta(hours=0, minutes=timelapse)
@@ -109,10 +109,10 @@ if lingua == 'en':
 
     if hash:
         text = WriteApp(hash)
-        columns_to_temove = ['id', 'conversation_id', 'created_at', 
-                             'time', 'timezone', 'user_id', 'username', 
+        columns_to_temove = ['id', 'conversation_id', 'created_at',
+                             'time', 'timezone', 'user_id', 'username',
                              'name', 'place',  'language', 'mentions', 
-                             'urls', 'photos', 'replies_count', 
+                             'urls', 'photos', 'replies_count',
                              'retweets_count', 'likes_count', 'date',
                              'hashtags', 'cashtags', 'link', 'retweet',
                              'quote_url', 'video', 'thumbnail', 'near',
@@ -127,7 +127,8 @@ if lingua == 'en':
 
         st.write("")
 
-        st.write("Checkout one random tweet from the collection you've just downloaded")
+        st.write("Checkout one random tweet from the collection \
+                  you've just downloaded")
 
         st.write("")
 
@@ -165,8 +166,8 @@ elif lingua == 'pt':
             escolha! lembre-se que um N muito grande \
             deixa o processo mais lento")
 
-    timelapse = st.number_input('Twitter nos últimos N minutos!', 
-                                 value=5, max_value=30, min_value=1)
+    timelapse = st.number_input('Twitter nos últimos N minutos!',
+                                value=5, max_value=30, min_value=1)
 
     d = datetime.today() - timedelta(hours=0, minutes=timelapse)
     horadia = d.strftime("%Y-%m-%d %H:%M:%S")
@@ -175,10 +176,10 @@ elif lingua == 'pt':
 
     if hash:
         text = WriteApp(hash)
-        columns_to_temove = ['id', 'conversation_id', 'created_at', 
-                             'time', 'timezone', 'user_id', 'username', 
-                             'name', 'place',  'language', 'mentions', 
-                             'urls', 'photos', 'replies_count', 
+        columns_to_temove = ['id', 'conversation_id', 'created_at',
+                             'time', 'timezone', 'user_id', 'username',
+                             'name', 'place',  'language', 'mentions',
+                             'urls', 'photos', 'replies_count',
                              'retweets_count', 'likes_count', 'date',
                              'hashtags', 'cashtags', 'link', 'retweet',
                              'quote_url', 'video', 'thumbnail', 'near',
