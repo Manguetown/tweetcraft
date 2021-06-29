@@ -3,34 +3,31 @@ from text import textprocess as tp
 
 
 class TestTextProcessing(unittest.TestCase):
-
     def setUp(self):
         self.text = "abcdefg"
 
     def test_remove_url(self):
-        got = tp.remove_url(['oh well whatever nevermind https://t.co/asd',
-                             'come as you are www.nirvana.se'])
-        expected = ['oh well whatever nevermind  ', 'come as you are  ']
+        got = tp.remove_url(
+            [
+                "oh well whatever nevermind https://t.co/asd",
+                "come as you are www.nirvana.se",
+            ]
+        )
+        expected = ["oh well whatever nevermind  ", "come as you are  "]
         self.assertEqual(got, expected)
 
     def test_tokenize_text(self):
         got = tp.tokenize_text(self.text)
-        expected = [['a'], ['b'], ['c'],
-                    ['d'], ['e'], ['f'],
-                    ['g']
-                    ]
+        expected = [["a"], ["b"], ["c"], ["d"], ["e"], ["f"], ["g"]]
         self.assertEqual(got, expected)
 
     def test_untokenize_text(self):
         got = tp.untokenize_text(tp.tokenize_text(self.text))
-        expected = ['a ', 'b ', 'c ',
-                    'd ', 'e ', 'f ',
-                    'g '
-                    ]
+        expected = ["a ", "b ", "c ", "d ", "e ", "f ", "g "]
         self.assertEqual(got, expected)
 
     def test_remove_regex(self):
-        got = tp.remove_regex(['remove pattern'], "remove pattern")
+        got = tp.remove_regex(["remove pattern"], "remove pattern")
         expected = [""]
         self.assertEqual(got, expected)
 
@@ -41,10 +38,10 @@ class TestTextProcessing(unittest.TestCase):
 
     def test_get_freq_dist_list(self):
         got = tp.get_freq_dist_list(tp.tokenize_text(self.text))
-        expected = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+        expected = ["a", "b", "c", "d", "e", "f", "g"]
         self.assertEqual(got, expected)
 
     def test_remove_emoticons(self):
         got = tp.remove_emoticons("😁")
-        expected = ['']
+        expected = [""]
         self.assertEqual(got, expected)

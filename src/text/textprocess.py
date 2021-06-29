@@ -16,11 +16,15 @@ def remove_url(text: str) -> list:
 
     output = []
 
-    http_str = (r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|" +
-                r"[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
+    http_str = (
+        r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|"
+        + r"[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+    )
 
-    www_str = (r"www?.(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|" +
-               r"(?:%[0-9a-fA-F][0-9a-fA-F]))+")
+    www_str = (
+        r"www?.(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|"
+        + r"(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+    )
 
     http_exp = re.compile(http_str)
     www_exp = re.compile(www_str)
@@ -31,7 +35,7 @@ def remove_url(text: str) -> list:
         for exp in url_exps:
             urls = exp.findall(line)
             for u in urls:
-                line = line.replace(u, ' ')
+                line = line.replace(u, " ")
         output.append(line)
 
     return output
@@ -48,7 +52,7 @@ def remove_regex(text, regex_pattern):
         matches = re.finditer(regex_pattern, line)
 
         for m in matches:
-            line = re.sub(m.group().strip(), '', line)
+            line = re.sub(m.group().strip(), "", line)
 
         output.append(line)
 
@@ -72,12 +76,13 @@ def remove_emoticons(text: str) -> list:
         u"\U0001F680-\U0001F6FF"  # transport & map symbols
         u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
         "]+",
-        flags=re.UNICODE)
+        flags=re.UNICODE,
+    )
 
     output = []
 
     for line in text:
-        line = emoticon_regex.sub(r'', line)
+        line = emoticon_regex.sub(r"", line)
 
         output.append(line)
 
@@ -98,7 +103,7 @@ def remove_punctuation(text):
     output = []
 
     for line in text:
-        line = line.translate(str.maketrans('', '', string.punctuation))
+        line = line.translate(str.maketrans("", "", string.punctuation))
         output.append(line)
 
     return output
@@ -188,10 +193,10 @@ def untokenize_text(tokens):
     output = []
 
     for tk_line in tokens:
-        new_line = ''
+        new_line = ""
 
         for word in tk_line:
-            new_line += word + ' '
+            new_line += word + " "
 
         output.append(new_line)
 
@@ -203,12 +208,12 @@ def get_text_cloud(tokens):
     faz a nuvem
     """
 
-    text = ''
+    text = ""
 
     for tk_line in tokens:
 
         for word in tk_line:
-            text += word + ' '
+            text += word + " "
 
     return text
 
