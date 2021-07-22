@@ -7,6 +7,9 @@ from text import textprocess
 from scrape.ScrapeTwint import ScrapeHashtagTwint
 from datetime import datetime, timedelta
 
+from transformers import pipeline
+from google_trans_new import google_translator
+
 
 class WriteApp:
     def __init__(self, path):
@@ -43,7 +46,8 @@ class WriteApp:
         return self
 
     def remove_stopwords(self):
-        stopwords = list(pd.read_fwf('stopwords.txt', header=None)[0])
+        import os; os.listdir()
+        stopwords = np.loadtxt('stopwords.txt', dtype=str)
         self.tweets_tokenized = textprocess.remove_stopwords(
                                 text.tweets_tokenized, stopwords)
         return self
@@ -63,6 +67,26 @@ class WriteApp:
         example = np.random.choice(self.puretweets)
         st.write(example)
         return self
+
+    def translate_and_analize(self):
+        translator = google_translator()
+
+        classifier = pipeline('sentiment-analysis')
+
+        translations = translator.translate(self.tweets, lang_tgt='en')
+
+        analysis_tot = [classifier(tweet)[0] for tweet in translations]
+
+        print(analysis_tot)
+
+        labels = [analysis['label'] for analysis in analysis_tot]
+
+        analysis_statistic = [ labels.count('POSITIVE')/len(self.tweets) , labels.count('NEGATIVE')/len(self.tweets) ]
+
+        mean_score = np.mean([analysis['score'] for analysis in analysis_tot])
+
+        return analysis_statistic, mean_score
+
 
 
 lingua = st.sidebar.selectbox('', ['pt', 'en'])
@@ -134,6 +158,20 @@ if lingua == 'en':
 
         text.showrandomtweet()
 
+        st.write("")
+
+        st.write("Now let's do a quick dive into the Sentiment within our tweet set!")
+
+        stat, mean_score = text.translate_and_analize()
+
+        st.write("How much Positivity we found around this word?")
+
+        streamlit.progress(stat[0])
+
+        st.write("What is the confidence score of this analysis")
+
+        streamlit.progress(stat[0])
+
 elif lingua == 'pt':
 
     st.title('Tweetcraft')
@@ -199,6 +237,22 @@ elif lingua == 'pt':
         st.write("")
 
         text.showrandomtweet()
+
+        st.write("")
+
+        #st.write("Now let's do a quick dive into the Sentiment within our tweet set!")
+
+        st.write("Agora vamos dar um rápido mergulho no Sentimento presente nesse conjunto de tweets!")
+
+        stat, mean_score = text.translate_and_analize()
+
+        st.write("Quanta Positividade encontramos ao redor dessa palavra?")
+
+        st.progress(stat[0])
+
+        st.write("Qual é a nota de confiança dessa análise?")
+
+        st.progress(mean_score)
 
 
 st.button("Re-run")
