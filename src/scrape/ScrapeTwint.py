@@ -1,13 +1,14 @@
-import os
+import twint
 
 
 def ScrapeHashtagTwint(hashtag, datetime):
-    os.system(
-        "twint -s "
-        + hashtag
-        + ' --since "'
-        + datetime
-        + '"  -o '
-        + hashtag
-        + "tweets.csv --csv "
-    )
+
+    c = twint.Config()
+    c.Search = hashtag
+    c.Since = datetime
+    c.Pandas = True
+    c.Hide_output = True
+
+    twint.run.Search(c)
+    df = twint.storage.panda.Tweets_df
+    df.to_csv(f"{hashtag}tweets.csv")

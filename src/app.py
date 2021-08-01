@@ -10,14 +10,13 @@ from datetime import datetime, timedelta
 
 class WriteApp:
     def __init__(self, path):
-        self._df = pd.read_csv(path + "tweets.csv", sep="\t")
+
+        self._df = pd.read_csv(path + "tweets.csv")
         self.tweets = None
 
-    @staticmethod
     def data(self):
         return self._df
 
-    @staticmethod
     def tokenized_text(self):
         return self.tweets_tokenized
 
@@ -113,27 +112,27 @@ if lingua == "en":
     d = datetime.today() - timedelta(hours=0, minutes=timelapse)
     horadia = d.strftime("%Y-%m-%d %H:%M:%S")
 
-    ScrapeHashtagTwint(hash, horadia)
-
     if hash:
+        ScrapeHashtagTwint(hash, horadia)
         text = WriteApp(hash)
-        columns_to_temove = [
+
+        columns_to_remove = [
             "id",
             "conversation_id",
             "created_at",
-            "time",
+            # "time",
             "timezone",
             "user_id",
             "username",
             "name",
             "place",
             "language",
-            "mentions",
+            # "mentions",
             "urls",
             "photos",
-            "replies_count",
-            "retweets_count",
-            "likes_count",
+            # "replies_count",
+            # "retweets_count",
+            # "likes_count",
             "date",
             "hashtags",
             "cashtags",
@@ -154,7 +153,7 @@ if lingua == "en":
             "trans_src",
             "trans_dest",
         ]
-        text = text.remove_columns(columns_to_temove)
+        text = text.remove_columns(columns_to_remove)
         text = text.select_tweets().remove_url().remove_punctuation()
         text = text.tokenize().remove_stopwords()
 
@@ -216,27 +215,26 @@ elif lingua == "pt":
     d = datetime.today() - timedelta(hours=0, minutes=timelapse)
     horadia = d.strftime("%Y-%m-%d %H:%M:%S")
 
-    ScrapeHashtagTwint(hash, horadia)
-
     if hash:
+        ScrapeHashtagTwint(hash, horadia)
         text = WriteApp(hash)
-        columns_to_temove = [
+        columns_to_remove = [
             "id",
             "conversation_id",
             "created_at",
-            "time",
+            # "time",
             "timezone",
             "user_id",
             "username",
             "name",
             "place",
             "language",
-            "mentions",
+            # "mentions",
             "urls",
             "photos",
-            "replies_count",
-            "retweets_count",
-            "likes_count",
+            # "replies_count",
+            # "retweets_count",
+            # "likes_count",
             "date",
             "hashtags",
             "cashtags",
@@ -257,7 +255,7 @@ elif lingua == "pt":
             "trans_src",
             "trans_dest",
         ]
-        text = text.remove_columns(columns_to_temove)
+        text = text.remove_columns(columns_to_remove)
         text = text.select_tweets().remove_url().remove_punctuation()
         text = text.tokenize().remove_stopwords()
 
