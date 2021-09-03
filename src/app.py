@@ -1,3 +1,5 @@
+# %%
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -7,10 +9,15 @@ from text import textprocess
 from scrape.ScrapeTwint import ScrapeHashtagTwint
 from datetime import datetime, timedelta
 
+# %%
+
+from transformers import pipeline
+from google_trans_new import google_translator
+
+# %% 
 
 class WriteApp:
     def __init__(self, path):
-
         self._df = pd.read_csv(path + "tweets.csv")
         self.tweets = None
 
@@ -42,7 +49,7 @@ class WriteApp:
         return self
 
     def remove_stopwords(self):
-        stopwords = list(pd.read_fwf("stopwords.txt", header=None)[0])
+        stopwords = list(pd.read_csv("stopwords.txt", header=None)[0])
         self.tweets_tokenized = textprocess.remove_stopwords(
             text.tweets_tokenized, stopwords
         )
@@ -63,6 +70,43 @@ class WriteApp:
         example = np.random.choice(self.puretweets)
         st.write(example)
         return self
+
+    def translate_tweets(self):
+        translator = google_translator()
+        self.translations = translator.translate(self.tweets, lang_tgt='en')
+        return self
+
+    def analyze_tweets(self):
+        classifier = pipeline('sentiment-analysis')
+        analysis_tot = [classifier(tweet)[0] for tweet in self.translations]
+        labels = [analysis['label'] for analysis in analysis_tot]
+        analysis_statistic = [ labels.count('POSITIVE')/len(self.tweets) , labels.count('NEGATIVE')/len(self.tweets) ]
+        mean_score = np.mean([analysis['score'] for analysis in analysis_tot])
+        return analysis_statistic, mean_score
+
+    def hivemind(self):
+        summarizer = pipeline("summarization")
+        prophecies = self.tweets
+
+        # size threshold for summarization
+        N = 1200
+
+        while len(prophecies) != 1:
+            self.prophet = []
+            hivemind_str = ''
+            hiveminds = []
+            for prophecy in prophecies:
+                if len(hivemind_str) + len(prophecy) < N :
+                    hivemind_str += ' ' + prophecy
+                else : 
+                    hiveminds += [hivemind_str]
+                    prophecy_sum = summarizer(hivemind_str, min_length=5, max_length=20)['summary_text']
+                    hivemind_str = ''
+                    self.prophet += [prophecy_sum]
+            prophecies = self.prophet
+        
+        return prophecies[1]
+
 
 
 lingua = st.sidebar.selectbox("", ["pt", "en"])
@@ -170,6 +214,32 @@ if lingua == "en":
 
         text.showrandomtweet()
 
+        st.write("")
+
+        st.write("Now let's do a quick dive into the Sentiment within our tweet set!")
+
+        text.translate_tweets()
+
+        stat, mean_score = text.analyze_tweets()
+
+        with st.beta_expander("How much Positivity we found around this word?"):
+            st.progress(stat[0])
+            st.write("What is the confidence score of this analysis")
+            st.progress(stat[0])
+
+        st.write("")
+        st.write("")
+
+        # st.write("What does the HiveMind tell us?")
+
+        with st.beta_expander("What does the HiveMind tell us?"):
+            prophecy = text.hivemind()
+            st.write(prophecy)
+
+        st.write("")
+        st.write("")
+
+
 elif lingua == "pt":
 
     st.title("Tweetcraft")
@@ -268,6 +338,32 @@ elif lingua == "pt":
         st.write("")
 
         text.showrandomtweet()
+
+        st.write("")
+
+        st.write("Agora vamos dar um rápido mergulho no Sentimento presente nesse conjunto de tweets!")
+
+        text.translate_tweets()
+
+        stat, mean_score = text.analyze_tweets()
+
+        st.write("Quanta Positividade encontramos ao redor dessa palavra?")
+
+        st.progress(stat[0])
+
+        st.write("Qual é a nota de confiança dessa análise?")
+
+        st.progress(mean_score)
+
+        st.write("")
+        st.write("")
+
+
+        with st.beta_expander("O que a Super Mente usuária do tweeter nos diz?"):
+            prophecy = text.hivemind()
+            st.write(prophecy)
+            
+        #st.write("O que a Super Mente usuária do tweeter nos diz?")
 
 
 st.button("Re-run")
