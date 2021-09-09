@@ -344,7 +344,6 @@ elif lingua == "pt":
 
         st.write("")
 
-        #st.write("Agora vamos dar um rápido mergulho no Sentimento presente nesse conjunto de tweets!")
 
         text.translate_tweets()
 
