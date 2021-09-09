@@ -236,7 +236,6 @@ if lingua == "en":
         st.write("")
         st.write("")
 
-        # st.write("What does the HiveMind tell us?")
 
         with st.beta_expander("What does the HiveMind tell us?"):
             prophecy = text.hivemind()
