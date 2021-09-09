@@ -222,7 +222,6 @@ if lingua == "en":
 
         st.write("")
 
-       # st.write("Now let's do a quick dive into the Sentiment within our tweet set!")
 
         text.translate_tweets()
 
