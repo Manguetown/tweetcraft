@@ -27,6 +27,9 @@ class WriteApp:
     def tokenized_text(self):
         return self.tweets_tokenized
 
+    def printzera(self):
+        print(self._df.columns)
+
     def remove_columns(self, columns_remove):
         self._df = self._df.drop(columns_remove, axis=1)
         return self
@@ -73,7 +76,8 @@ class WriteApp:
 
     def translate_tweets(self):
         translator = google_translator()
-        self.translations = translator.translate(self.tweets, lang_tgt='en')
+        #self.translations = translator.translate(self.tweets, lang_tgt='en')
+        self.translations = [translator.translate(tweet, lang_tgt='en') for tweet in self.tweets]
         return self
 
     def analyze_tweets(self):
@@ -105,7 +109,7 @@ class WriteApp:
                     self.prophet += [prophecy_sum]
             prophecies = self.prophet
         
-        return prophecies[1]
+        return prophecies[0]
 
 
 
@@ -197,6 +201,7 @@ if lingua == "en":
             "trans_src",
             "trans_dest",
         ]
+        text.printzera()
         text = text.remove_columns(columns_to_remove)
         text = text.select_tweets().remove_url().remove_punctuation()
         text = text.tokenize().remove_stopwords()
@@ -205,24 +210,26 @@ if lingua == "en":
 
         st.write("")
 
-        st.write(
-            "Checkout one random tweet from the collection \
-                  you've just downloaded"
-        )
+        # st.write(
+        #     "Checkout one random tweet from the collection \
+        #           you've just downloaded"
+        # )
+
+        with st.beta_expander("Checkout one random tweet from the collection \
+                  you've just downloaded"):
+                st.write("")
+                text.showrandomtweet()
 
         st.write("")
 
-        text.showrandomtweet()
-
-        st.write("")
-
-        st.write("Now let's do a quick dive into the Sentiment within our tweet set!")
+       # st.write("Now let's do a quick dive into the Sentiment within our tweet set!")
 
         text.translate_tweets()
 
         stat, mean_score = text.analyze_tweets()
 
-        with st.beta_expander("How much Positivity we found around this word?"):
+        with st.beta_expander("a quick dive into the Sentiment within our tweet set!"):
+            st.write("How much Positivity we found around this word?")
             st.progress(stat[0])
             st.write("What is the confidence score of this analysis")
             st.progress(stat[0])
@@ -333,28 +340,23 @@ elif lingua == "pt":
 
         st.write("")
 
-        st.write("Dá uma olhada em um tweet aleatório do conjunto baixado")
+        with st.beta_expander("Dá uma olhada em um tweet aleatório do conjunto baixado"):
+            st.write("")
+            text.showrandomtweet()
 
         st.write("")
 
-        text.showrandomtweet()
-
-        st.write("")
-
-        st.write("Agora vamos dar um rápido mergulho no Sentimento presente nesse conjunto de tweets!")
+        #st.write("Agora vamos dar um rápido mergulho no Sentimento presente nesse conjunto de tweets!")
 
         text.translate_tweets()
 
         stat, mean_score = text.analyze_tweets()
 
-        st.write("Quanta Positividade encontramos ao redor dessa palavra?")
-
-        st.progress(stat[0])
-
-        st.write("Qual é a nota de confiança dessa análise?")
-
-        st.progress(mean_score)
-
+        with st.beta_expander("um rápido mergulho no Sentimento presente nesse conjunto de tweets!"):
+            st.write("Quanta Positividade encontramos ao redor dessa palavra?")
+            st.progress(stat[0])
+            st.write("Qual é a nota de confiança dessa análise?")
+            st.progress(mean_score)
         st.write("")
         st.write("")
 
