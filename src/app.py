@@ -362,7 +362,6 @@ elif lingua == "pt":
             prophecy = text.hivemind()
             st.write(prophecy)
             
-        #st.write("O que a Super Mente usuária do tweeter nos diz?")
 
 
 st.button("Re-run")
