@@ -103,7 +103,7 @@ def remove_punctuation(text):
     output = []
 
     for line in text:
-        line = line.translate(str.maketrans("", "", string.punctuation))
+        line = line.translate(str.maketrans("", "", string.punctuation +  '’'))
         output.append(line)
 
     return output
