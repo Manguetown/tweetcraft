@@ -12,6 +12,9 @@ from nltk.probability import FreqDist
 from transformers import pipeline
 #from google_trans_new import google_translator
 
+# needs to use this to generate synthatic classes
+nltk.download('averaged_perceptron_tagger')
+
 class WriteApp:
     def __init__(self, path):
 
@@ -270,7 +273,7 @@ if lingua == "en":
 
         st.write("")
 
-        with st.beta_expander("Checkout one random tweet from the collection \
+        with st.expander("Checkout one random tweet from the collection \
                   you've just downloaded"):
                 st.write("")
                 text.showrandomtweet()
@@ -282,7 +285,7 @@ if lingua == "en":
 
         stat, mean_score = text.analyze_tweets()
 
-        with st.beta_expander("a quick dive into the Sentiment within our tweet set!"):
+        with st.expander("a quick dive into the Sentiment within our tweet set!"):
             st.write("How much Positivity we found around this word?")
             st.progress(stat[0])
             st.write("What is the confidence score of this analysis")
@@ -291,8 +294,8 @@ if lingua == "en":
         st.write("")
         st.write("")
 
-        with st.beta_expander("What does the HiveMind tell us?"):
-
+        with st.expander("What does the HiveMind tell us?"):
+            
             text = text.select_tweets().remove_url().remove_punctuation()
 
             text = text.tokenize().remove_stopwords()
@@ -402,7 +405,7 @@ elif lingua == "pt":
 
         st.write("")
 
-        with st.beta_expander("Dá uma olhada em um tweet aleatório do conjunto baixado"):
+        with st.expander("Dá uma olhada em um tweet aleatório do conjunto baixado"):
             st.write("")
             text.showrandomtweet()
 
@@ -412,7 +415,7 @@ elif lingua == "pt":
 
         stat, mean_score = text.analyze_tweets()
 
-        with st.beta_expander("Um breve mergulho no Sentimento presente no nosso conjunto de tweets!"):
+        with st.expander("Um breve mergulho no Sentimento presente no nosso conjunto de tweets!"):
             st.write("Quanta Positividade encontramos ao redor do termo alvo?")
             st.progress(stat[0])
             st.write("Qual é a confiabilidade dessa análise?")
@@ -421,7 +424,7 @@ elif lingua == "pt":
         st.write("")
         st.write("")
 
-        with st.beta_expander("O que nos diz a Mente Geral?"):
+        with st.expander("O que nos diz a Mente Geral?"):
             
             text = text.select_tweets().remove_url().remove_punctuation()
 

@@ -1,5 +1,6 @@
 .nox/
 *-env/
+*_env/
 .pytest_cache/
 .vscode/
 __pycache__/
