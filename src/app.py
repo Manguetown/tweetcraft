@@ -10,10 +10,12 @@ import nltk as nltk
 from nltk.probability import FreqDist
 
 from transformers import pipeline
-#from google_trans_new import google_translator
+
+# from google_trans_new import google_translator
 
 # needs to use this to generate synthatic classes
-nltk.download('averaged_perceptron_tagger')
+nltk.download("averaged_perceptron_tagger")
+
 
 class WriteApp:
     def __init__(self, path):
@@ -71,10 +73,9 @@ class WriteApp:
         st.write(example)
         return self
 
-    
     def generate_wordcloud_lean(self):
         self.WC = textprocess.get_text_cloud(self.tweets_tokenized)
-        self.wordlist = self.WC.split(' ')
+        self.wordlist = self.WC.split(" ")
         return self
 
     def get_synthatic_classes(self):
@@ -94,56 +95,61 @@ class WriteApp:
 
     def describe_classes(self, classified_lean_WordCloud):
         description_dictionary = {
-        "CC":"coordinating conjunction",
-        "CD":"cardinal digit",
-        "DT":"determiner",
-        "EX":"existential there",
-        "FW":"foreign word",
-        "IN":"preposition/subordinating conjunction",
-        "JJ":"This NLTK POS Tag is an adjective (large)",
-        "JJR":"adjective, comparative (larger)",
-        "JJS":"adjective, superlative",
-        "LS":"list market",
-        "MD":"modal (could, will)",
-        "NN":"noun, singular (cat, tree)",
-        "NNS":"noun plural (desks)",
-        "NNP":"proper noun, singular (sarah)",
-        "NNPS":"proper noun, plural (indians or americans)",
-        "PDT":"predeterminer (all, both, half)",
-        "POS":"possessive ending (parent\ ‘s)",
-        "PRP":"personal pronoun (hers, herself, him,himself)",
-        "PRP$":"possessive pronoun (her, his, mine, my, our )",
-        "RB":"adverb (occasionally, swiftly)",
-        "RBR":"adverb, comparative (greater)",
-        "RBS":"adverb, superlative (biggest)",
-        "RP":"particle (about)",
-        "TO":"infinite marker (to)",
-        "UH":"interjection (goodbye)",
-        "VB":"verb (ask)",
-        "VBG":"verb gerund (judging)",
-        "VBD":"verb past tense (pleaded)",
-        "VBN":"verb past participle (reunified)",
-        "VBP":"verb, present tense not 3rd person singular(wrap)",
-        "VBZ":"verb, present tense with 3rd person singular (bases)",
-        "WDT":"wh-determiner (that, what)",
-        "WP":"wh- pronoun (who)",
-        "WRB":"wh- adverb (how)"}
-        
+            "CC": "coordinating conjunction",
+            "CD": "cardinal digit",
+            "DT": "determiner",
+            "EX": "existential there",
+            "FW": "foreign word",
+            "IN": "preposition/subordinating conjunction",
+            "JJ": "This NLTK POS Tag is an adjective (large)",
+            "JJR": "adjective, comparative (larger)",
+            "JJS": "adjective, superlative",
+            "LS": "list market",
+            "MD": "modal (could, will)",
+            "NN": "noun, singular (cat, tree)",
+            "NNS": "noun plural (desks)",
+            "NNP": "proper noun, singular (sarah)",
+            "NNPS": "proper noun, plural (indians or americans)",
+            "PDT": "predeterminer (all, both, half)",
+            "POS": "possessive ending (parent\ ‘s)",
+            "PRP": "personal pronoun (hers, herself, him,himself)",
+            "PRP$": "possessive pronoun (her, his, mine, my, our )",
+            "RB": "adverb (occasionally, swiftly)",
+            "RBR": "adverb, comparative (greater)",
+            "RBS": "adverb, superlative (biggest)",
+            "RP": "particle (about)",
+            "TO": "infinite marker (to)",
+            "UH": "interjection (goodbye)",
+            "VB": "verb (ask)",
+            "VBG": "verb gerund (judging)",
+            "VBD": "verb past tense (pleaded)",
+            "VBN": "verb past participle (reunified)",
+            "VBP": "verb, present tense not 3rd person singular(wrap)",
+            "VBZ": "verb, present tense with 3rd person singular (bases)",
+            "WDT": "wh-determiner (that, what)",
+            "WP": "wh- pronoun (who)",
+            "WRB": "wh- adverb (how)",
+        }
+
         from_word_to_description = {}
         for word_class in classified_lean_WordCloud:
-            from_word_to_description[word_class[0]] = description_dictionary[word_class[1]]
+            from_word_to_description[word_class[0]] = description_dictionary[
+                word_class[1]
+            ]
         return from_word_to_description
 
-    def write_target_syntathic_structure(self, target_syntathic_structure = ("NNP","RB","VB","NN"),  n_most_common = 3):
+    def write_target_syntathic_structure(
+        self, target_syntathic_structure=("NNP", "RB", "VB", "NN"), n_most_common=3
+    ):
         """
         Example:
 
         target_syntathic_structure = ("NNP","RB","VB","NN")
-    
-        """
-        final_sentence = ''
 
-        classified_word_list = self.classified 
+        """
+        final_sentence = ""
+
+        classified_word_list = self.classified
 
         for syntathic_class in target_syntathic_structure:
             print(syntathic_class)
@@ -152,7 +158,7 @@ class WriteApp:
             print(freq_target)
             possible_words = np.transpose(freq_target.most_common(n_most_common))[0]
             word_choice = np.random.choice(possible_words)
-            final_sentence += ' ' + word_choice
+            final_sentence += " " + word_choice
 
         return final_sentence
 
@@ -163,17 +169,21 @@ class WriteApp:
 
     def translate_tweets(self):
         translator = google_translator()
-        self.translations = translator.translate(self.tweets, lang_tgt='en')
+        self.translations = translator.translate(self.tweets, lang_tgt="en")
         return self
 
     def analyze_tweets(self):
-        classifier = pipeline('sentiment-analysis')
-       # analysis_tot = [classifier(tweet)[0] for tweet in self.translations] # BYPASSING TRANSLATION GOOGLE_TRANS_NEW ISSUE
+        classifier = pipeline("sentiment-analysis")
+        # analysis_tot = [classifier(tweet)[0] for tweet in self.translations] # BYPASSING TRANSLATION GOOGLE_TRANS_NEW ISSUE
         analysis_tot = [classifier(tweet)[0] for tweet in self.tweets]
-        labels = [analysis['label'] for analysis in analysis_tot]
-        analysis_statistic = [ labels.count('POSITIVE')/len(self.tweets) , labels.count('NEGATIVE')/len(self.tweets) ]
-        mean_score = np.mean([analysis['score'] for analysis in analysis_tot])
+        labels = [analysis["label"] for analysis in analysis_tot]
+        analysis_statistic = [
+            labels.count("POSITIVE") / len(self.tweets),
+            labels.count("NEGATIVE") / len(self.tweets),
+        ]
+        mean_score = np.mean([analysis["score"] for analysis in analysis_tot])
         return analysis_statistic, mean_score
+
 
 lingua = st.sidebar.selectbox("", ["pt", "en"])
 
@@ -219,10 +229,9 @@ if lingua == "en":
         "Twitter in the last N minutes!", value=5, max_value=30, min_value=1
     )
 
-    d = datetime.now() - timedelta( minutes=timelapse)
-    horadia = d.strftime('%Y-%m-%d %H:%M:%S')
+    d = datetime.now() - timedelta(minutes=timelapse)
+    horadia = d.strftime("%Y-%m-%d %H:%M:%S")
     # horadia = d.strftime('%a %b %d %H:%M:%S %z %Y')
-
 
     if hash:
         ScrapeHashtagTwint(hash, horadia)
@@ -273,15 +282,16 @@ if lingua == "en":
 
         st.write("")
 
-        with st.expander("Checkout one random tweet from the collection \
-                  you've just downloaded"):
-                st.write("")
-                text.showrandomtweet()
+        with st.expander(
+            "Checkout one random tweet from the collection \
+                  you've just downloaded"
+        ):
+            st.write("")
+            text.showrandomtweet()
 
         st.write("")
 
-
-       # text.translate_tweets()
+        # text.translate_tweets()
 
         stat, mean_score = text.analyze_tweets()
 
@@ -295,7 +305,7 @@ if lingua == "en":
         st.write("")
 
         with st.expander("What does the HiveMind tell us?"):
-            
+
             text = text.select_tweets().remove_url().remove_punctuation()
 
             text = text.tokenize().remove_stopwords()
@@ -353,10 +363,10 @@ elif lingua == "pt":
         "Twitter nos últimos N minutos!", value=5, max_value=30, min_value=1
     )
 
-    d = datetime.today() - timedelta( minutes=timelapse)
-    horadia = d.strftime('%Y-%m-%d %H:%M:%S')
+    d = datetime.today() - timedelta(minutes=timelapse)
+    horadia = d.strftime("%Y-%m-%d %H:%M:%S")
     # horadia = d.strftime('%a %b %d %H:%M:%S %z %Y')
-    
+
     if hash:
         ScrapeHashtagTwint(hash, horadia)
         text = WriteApp(hash)
@@ -411,11 +421,13 @@ elif lingua == "pt":
 
         st.write("")
 
-       # text.translate_tweets()
+        # text.translate_tweets()
 
         stat, mean_score = text.analyze_tweets()
 
-        with st.expander("Um breve mergulho no Sentimento presente no nosso conjunto de tweets!"):
+        with st.expander(
+            "Um breve mergulho no Sentimento presente no nosso conjunto de tweets!"
+        ):
             st.write("Quanta Positividade encontramos ao redor do termo alvo?")
             st.progress(stat[0])
             st.write("Qual é a confiabilidade dessa análise?")
@@ -425,7 +437,7 @@ elif lingua == "pt":
         st.write("")
 
         with st.expander("O que nos diz a Mente Geral?"):
-            
+
             text = text.select_tweets().remove_url().remove_punctuation()
 
             text = text.tokenize().remove_stopwords()
@@ -443,12 +455,3 @@ elif lingua == "pt":
 
 
 st.button("Re-run")
-
-
-
-
-
-
-
-
-
