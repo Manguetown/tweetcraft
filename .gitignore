@@ -1,4 +1,5 @@
 nlp-env/
+tweet/
 .vscode/
 __pycache__/
 .pytest_cache/
@@ -6,3 +7,4 @@ __pycache__/
 *.csv
 htmlcov/
 .coverage
+tweetcraft_env/
