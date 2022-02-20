@@ -143,8 +143,7 @@ class WriteApp:
         return analysis_statistic, mean_score
 
 
-st.set_page_config(page_title="Tweetcraft",
-                   layout="wide")
+st.set_page_config(page_title="Tweetcraft", layout="wide")
 
 col1, col2 = st.columns([5, 1])
 
@@ -152,14 +151,14 @@ with col2:
     lingua = st.selectbox("Selecione a linguagem (Select a language)", ["pt", "en"])
 
 if lingua == "en":
-    
+
     with col1:
         st.title("Tweetcraft")
         st.header("An App by @sa_nahum and @RioJanu")
 
     st.write(
-        "Welcome to Tweetcraft!" + \
-        "Enjoy a brief journey into the wonders of \
+        "Welcome to Tweetcraft!"
+        + "Enjoy a brief journey into the wonders of \
               Twitter scraping and processing"
     )
 
@@ -198,11 +197,10 @@ if lingua == "en":
         text = text.tokenize().remove_stopwords()
 
         st.pyplot(
-            text.generate_wordcloud(max_font_size=200,
-                                    width=700,
-                                    height=200,
-                                    figsize=(20, 14))
+            text.generate_wordcloud(
+                max_font_size=200, width=700, height=200, figsize=(20, 14)
             )
+        )
 
         col_3_1, col_3_2, col_3_3 = st.columns(3)
 
@@ -236,16 +234,18 @@ elif lingua == "pt":
 
     with col1:
         st.title("Tweetcraft")
-        st.header("Um App de [@sa_nahum](https://twitter.com/sa_nahum) e [@RioJanu](https://twitter.com/RioJanu)")
+        st.header(
+            "Um App de [@sa_nahum](https://twitter.com/sa_nahum) e [@RioJanu](https://twitter.com/RioJanu)"
+        )
 
     st.write(
-        "Bem-vindo ao Tweetcraft! " + \
-        "Curta uma breve jornada pelas maravilhas \
+        "Bem-vindo ao Tweetcraft! "
+        + "Curta uma breve jornada pelas maravilhas \
             da extração e processamento de dados do Twitter"
     )
-    
+
     col_2_1, col_2_2 = st.columns(2)
-    
+
     with col_2_1:
         st.write(
             "Primeiramente, escolha uma palavra do seu interesse... \
@@ -279,20 +279,17 @@ elif lingua == "pt":
         text = text.tokenize().remove_stopwords()
 
         st.pyplot(
-            text.generate_wordcloud(max_font_size=200,
-                                    width=700,
-                                    height=200,
-                                    figsize=(20, 14))
+            text.generate_wordcloud(
+                max_font_size=200, width=700, height=200, figsize=(20, 14)
             )
+        )
 
         col_3_1, col_3_2, col_3_3 = st.columns(3)
-        
-        with col_3_1:        
+
+        with col_3_1:
             with st.expander("Dá uma olhada em um tweet aleatório do conjunto baixado"):
                 st.write("")
                 text.showrandomtweet()
-
-
 
         stat, mean_score = text.analyze_tweets()
         with col_3_2:
@@ -304,7 +301,7 @@ elif lingua == "pt":
                 st.write("Qual é a confiabilidade dessa análise?")
                 st.progress(stat[1])
 
-        with col_3_3:        
+        with col_3_3:
             with st.expander("O que nos diz a Mente Geral?"):
 
                 text = text.select_tweets().remove_url().remove_punctuation()
