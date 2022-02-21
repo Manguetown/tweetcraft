@@ -7,3 +7,4 @@ __pycache__/
 *.csv
 htmlcov/
 .coverage
+tweetcraft_env/
