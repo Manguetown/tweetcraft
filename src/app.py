@@ -216,13 +216,17 @@ if lingua == "en":
             stat, mean_score = text.analyze_tweets()
 
             with col_3_2:
-                with st.expander("a quick dive into the Sentiment within our tweet set!"):
+                with st.expander(
+                    "a quick dive into the Sentiment within our tweet set!"
+                ):
                     st.write("How much Positivity we found around this word?")
                     st.progress(stat[0])
                     st.write("What is the confidence score of this analysis")
                     st.progress(stat[1])
         except:
-            st.write("There is little online content around the target word for reading sentiment! Try choosing a word that's more talked about or raising value of N minutes! ")
+            st.write(
+                "There is little online content around the target word for reading sentiment! Try choosing a word that's more talked about or raising value of N minutes! "
+            )
 
         with col_3_3:
             with st.expander("What does the HiveMind tell us?"):
@@ -233,8 +237,10 @@ if lingua == "en":
                     text = text.get_synthatic_classes()
                     prophecy = text.write_target_syntathic_structure()
                     st.write(prophecy)
-                except :
-                    st.write("There is little online content around the target word for reaching the Hivemind thoughts! Try choosing a word that's more talked about or raising value of N minutes! ")
+                except:
+                    st.write(
+                        "There is little online content around the target word for reaching the Hivemind thoughts! Try choosing a word that's more talked about or raising value of N minutes! "
+                    )
 
 elif lingua == "pt":
 
@@ -306,15 +312,15 @@ elif lingua == "pt":
                     st.progress(stat[0])
                     st.write("Qual é a confiabilidade dessa análise?")
                     st.progress(stat[1])
-        except :
+        except:
             with col_3_2:
                 with st.expander(
                     "Um breve mergulho no Sentimento presente no nosso conjunto de tweets!"
                 ):
-                    st.write("Há pouco material para inferirmos sentimento, busque uma palavras mais em voga, ou aumente o numero de minutos N!")
-        
-        
-        
+                    st.write(
+                        "Há pouco material para inferirmos sentimento, busque uma palavras mais em voga, ou aumente o numero de minutos N!"
+                    )
+
         with col_3_3:
             with st.expander("O que nos diz a Mente Geral?"):
                 try:
@@ -330,6 +336,8 @@ elif lingua == "pt":
 
                     st.write(prophecy)
                 except:
-                    st.write("Há pouco material para consultarmos o oráculo da mente geral, busque uma palavras mais em voga, ou aumente o numero de minutos N!")
-        
+                    st.write(
+                        "Há pouco material para consultarmos o oráculo da mente geral, busque uma palavras mais em voga, ou aumente o numero de minutos N!"
+                    )
+
 st.button("Re-run")
